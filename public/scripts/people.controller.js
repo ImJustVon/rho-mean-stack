@@ -6,21 +6,29 @@ function PeopleController($http) {
   var controller = this;
   controller.people = [];
 
-  controller.listPeople = function(){
+  controller.listPeople = function () {
+
     console.log('Listing people');
-    $http.get('/people').then(function(response){
+    $http.get('/people').then(function (response) {
       console.log('response', response);
       controller.people = response.data;
-    }, function(error){
+    }, function (error) {
+
       console.log('error making request', error);
+    });
+
+    controller.order = order;
+  };
+
+  controller.addPerson = function () {
+    var data = { name: controller.name, hometown: controller.hometown, movie: controller.movie };
+
+    $http.post('/people', data).then(function (response) {
+      console.log('response', response);
     });
   };
 
-  controller.addPerson = function() {
-    var data = {name: controller.name};
-
-    $http.post('/people', data).then(function(response){
-      console.log('response', response);
-    });
+  controller.changeOrder = function (order) {
+    controller.order = order;
   };
 }

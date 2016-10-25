@@ -1,29 +1,64 @@
 <!DOCTYPE html>
 <html ng-app="meanApp">
-<head>
-  <meta charset="utf-8">
-  <title>MEAN Stack!</title>
 
-  <script src="vendors/angular.min.js" charset="utf-8"></script>
+    <head>
+        <meta charset="utf-8">
+        <title>MEAN Stack!</title>
 
-  <script src="scripts/app.module.js" charset="utf-8"></script>
-  <script src="scripts/people.controller.js" charset="utf-8"></script>
+        <script src="vendors/angular.min.js" charset="utf-8"></script>
 
-  <link rel="stylesheet" href="vendors/bootstrap.min.css">
-</head>
-<body ng-controller="PeopleController as ctrl">
-  <button ng-click="ctrl.listPeople()">Get People</button>
+        <script src="scripts/app.module.js" charset="utf-8"></script>
+        <script src="scripts/people.controller.js" charset="utf-8"></script>
 
-  <ul>
-    <li ng-repeat="person in ctrl.people">
-      <p>{{person.name}}</p>
-    </li>
-  </ul>
+        <link rel="stylesheet" href="vendors/bootstrap.min.css">
+    </head>
 
-  <div>
-    <label>Name:</label>
-    <input type="text" ng-model="ctrl.name">
-    <button ng-click="ctrl.addPerson()">Add Person</button>
-  </div>
-</body>
+    <body ng-controller="PeopleController as ctrl">
+        <div class="container">
+            <h1 class="text-center">People List</h1>
+            <button class="btn btn-primary" ng-click="ctrl.listPeople()">Get People</button>
+            <form>
+                <div class="form-group">
+                    <label for="order">Sort By</label>
+                    <select class="form-control" name="order" ng-model="ctrl.order">
+                    <option value="name">Name</option>
+                    <option value="hometown">Hometown</option>
+                    <option value="movie">Favorite movie</option>
+                  </select>
+                </div>
+
+            </form>
+            <ul class="list-group">
+                <li ng-repeat="person in ctrl.people | orderBy:ctrl.order " class="list-group-item">
+                    <h3>{{person.name}}</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Hometown: {{person.hometown}}
+                        </li>
+                        <li class="list-group-item">
+                            Favorite Movie: {{person.movie}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="well">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input class="form-control" type="text" ng-model="ctrl.name">
+                </div>
+                <div class="form-group">
+                    <label>Hometown:</label>
+                    <input class="form-control" type="text" ng-model="ctrl.hometown">
+                </div>
+                <div class="form-group">
+                    <label>Movie:</label>
+                    <input class="form-control" type="text" ng-model="ctrl.movie">
+                </div>
+                <button class="btn-default" ng-click="ctrl.addPerson()">Add Person</button>
+
+            </form>
+
+        </div>
+    </body>
+
 </html>
